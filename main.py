@@ -72,7 +72,6 @@ def extract_all_data():
     """Запускає Job для вивантаження всіх історичних даних."""
     
     try:
-        # Виклик Job 2
         output_files = run_extraction_job_all(
             raw_dir=RAW_DATA_ROOT
         )
@@ -107,7 +106,6 @@ def get_raw_data(feature, date):
     target_path = os.path.join(target_dir, file_name)
 
     if not os.path.exists(target_path):
-        # Перевіряємо також загальну структуру ALL_HISTORICAL_DATA/{FEATURE}/{DATE}.json
         target_dir_all = os.path.join(RAW_DATA_ROOT, "ALL_HISTORICAL_DATA", target_feature)
         target_path_all = os.path.join(target_dir_all, file_name)
         
@@ -117,7 +115,6 @@ def get_raw_data(feature, date):
         return jsonify({"error": f"File not found for feature '{feature}' on date '{date}'"}), 404
 
     try:
-        # as_attachment=False для відображення JSON у браузері
         return send_from_directory(target_dir, file_name, as_attachment=False, mimetype='application/json')
     except Exception as e:
         app.logger.error(f"Error serving file: {e}")
